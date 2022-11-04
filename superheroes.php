@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin: *");
 $superheroes = [
   [
       "id" => 1,
@@ -66,7 +66,21 @@ $superheroes = [
 ?>
 
 <ul>
+<?php 
+    $found="False";
+    $heroname = $_POST['heroname'];
+?>
 <?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
+     <?php if ($heroname == $superhero['alias'] OR $heroname == $superhero['name']){ $found="True"; ?>
+        <h3><?= $superhero['alias'];?></h3>
+        <h4><?= $superhero['name'];?></h4>
+        <p><?= $superhero['biography'];?></p>
+    <?php }?>
+    <?php if ($heroname == ""){;?>
+  	   <li><?= $superhero['alias']; ?></li>
+    <?php }?>
 <?php endforeach; ?>
+<?php if ((in_array($heroname,$superheroes))== false && ($heroname !== "") && $found == "False"){?>
+        <h3 class="red"><?= "Superhero not found"; ?></h3>
+    <?php }?>
 </ul>
